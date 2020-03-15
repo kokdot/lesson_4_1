@@ -10,30 +10,26 @@ class Route
 	def initialize(first, last)
 		@first = first
 		@last = last
-		@stations = []
+		@intermediate_stations = []
 	end
 	def station=(station)
-		if !@stations.include?(station) && @first != station && @last != station
-			@stations << station 
-			puts "Станция #{station.name} добавлена"
+		if @intermediate_stations.include?(station)
+			puts "Станция #{ station.name } уже была добавлена в этот маршрут ранее!"
 		else
-			puts "Станция #{station.name} уже была добавлена в этот маршрут ранее!"
+			@intermediate_stations << station 
+			puts "Станция #{ station.name } добавлена"
 		end
 	end
 	def remove_station=(station)
-		if @stations.include?(station) 
-			@stations.delete(station)
-			puts "Станция #{station.name} удалена"
+		if @intermediate_stations.include?(station) 
+			@intermediate_stations.delete(station)
+			puts "Станция #{ station.name } удалена"
 		else
-			puts "Станции #{station.name} нет на данном маршруте"
+			puts "Станции #{ station.name } нет на данном маршруте"
 
 		end
 	end
 	def stations
-		list_stations=[]
-		@stations.each do |st|
-			list_stations << st.name
-		end
-		list_stations.unshift(@first.name).push(@last.name)
+		list_stations = [@first, @intermediate_stations, @last].flatten
 	end
 end

@@ -13,78 +13,71 @@
 # только на 1 станцию за раз.
 # Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
 class Train
-	attr_accessor :speed
 	attr_writer :route
 	attr_reader :type, :quantity_vans
-	def initialize(number, type = true, quantity_vans)
+	def initialize(number, type = true, vans)
 		@number = number
-		@types = ["грузовой", "пассажирский"]
-		if type
-			@type = @types[0]
-		else
-			@type = @types[1]
-		end
-		@quantity_vans = quantity_vans
+		@type = type
+		@vans = vans
 		@speed = 0
 		@station_index = 0
-		# @stations = []
 	end
-	# def route=(route)
-	# 	@route = route
-	# 	# @stations = @route.stations.unshift(@route.first).push(@route.last)
-	# end
-	def near_stations
-		if @route == nil
-			puts "У вас нет ближайших станций, потому что у Вас нет маршрута"
-		else
-			if @station_index == 0
-				puts "Вы находитесь на первой станции маршрута"
-				puts "Следующая станция #{@route.stations[1]}"
-			elsif @station_index == @route.stations.size - 1
-				puts "Вы находитесь на последней станции маршрута"
-				puts "Предыдущая станция: #{@route.stations[-2]}"
-			else
-				puts "Вы находитесь на #{@route.stations[@station_index]} станции маршрута"
-				puts "Следующая станция #{@route.stations[@station_index + 1]}"
-				puts "Предыдущая станция: #{@route.stations[@station_index - 1]}"
-			end
-		end
-	end
-	def move(direction = true)
-		if @route == nil
+  def speed(delta)
+    if @speed + delta < 0 
+        @speed = 0
+    else
+      @speed += delta
+    end
+  end
+  def station
+    @route.stations[@station_index]
+  end
+  def station_before
+    @route.stations[@station_index - 1]
+  end 
+  def station_next
+    @route.stations[@station_index + 1]
+  end  
+	
+	def move_ahead
+  	if @route == nil
 			puts "Вы не можете начать движение, потому что у Вас нет маршрута"
 		else
-			if direction
-				if @station_index == @route.stations.size - 1
-					puts "Вы не можете двигаться вперед, потому что это последняя станция вашего маршрута"
-				else
-					@station_index += 1
-				end
+			if @station_index == @route.stations.size - 1
+				puts "Вы не можете двигаться вперед, потому что это последняя станция вашего маршрута"
 			else
-				if @station_index == 0
-					puts "Вы не можете двигаться назад, потому что это первая станция вашего маршрута"
-				else
-					@station_index += 1
-				end
+				@station_index += 1
 			end
-		end
+  def move_back
+    if @route == nil
+      puts "Вы не можете начать движение, потому что у Вас нет маршрута"
+    else
+		  if @station_index == 0
+			  puts "Вы не можете двигаться назад, потому что это первая станция вашего маршрута"
+		  else
+			   @station_index -= 1
+		  end
+	  end
 	end
-	def add_van(add = true)
+	def van_add
 		if speed != 0
 			puts "Операции с вагонами можно производить только во время остановки поезда!"
 		else
-			if add
-				@quantity_vans += 1
+			@vans += 1
+    end
+  end
+  def van_remove
+		if speed != 0
+      puts "Операции с вагонами можно производить только во время остановки поезда!"
+    else
+			if @vans == 0
+				puts "Вы не можете отцеплять вагоны, потому что у Вас их больше нет"
 			else
-				if @quantity_vans == 0
-					puts "Вы не можете отцеплять вагоны, потому что у Вас их больше нет"
-				else
-					@quantity_vans -= 1
-				end
+					@vans -= 1
 			end
 		end
 	end
 	def vans
-		return @quantity_vans
+		@vans
 	end
 end

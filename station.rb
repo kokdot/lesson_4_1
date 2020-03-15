@@ -15,23 +15,17 @@ class Station
 		@name
 	end
 	def get_train(train)
-		@trains << train
+	  @trains << train
 	end
 	def send_train(train)
 		@trains.delete(train)
 	end
 	def list_trains
-		@trains.each{|train| puts train.number}
+		@trains.each { |train| puts train.number }
 	end
 	def type_trains
-		cargo = 0
-		passenger = 0
-		@trains.each do |train| 
-			cargo += 1 if train.type == 'грузовой'
-			passenger += 1 if train.type == 'пассажирский'
-		end
-		puts "В данный момент на станци находится #{cargo} грузовых поездов и #{passenger} пассажирских поездов."
+    cargo = @trains.count { |train| train.type == 'грузовой' }
+    passenger = @trains.count { |train| train.type == 'пассажирский' }
+		puts "В данный момент на станци находится #{ cargo } грузовых поездов и #{ passenger } пассажирских поездов."
 	end
-
-		
 end
