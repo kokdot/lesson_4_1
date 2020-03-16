@@ -33,6 +33,6 @@ class Route
   end
 
   def stations
-    list_stations = [@first, @intermediate_stations, @last].flatten
+    [@first, @intermediate_stations, @last].flatten
   end
 end
