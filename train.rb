@@ -22,6 +22,7 @@ class Train
 		@speed = 0
 		@station_index = 0
 	end
+
   def speed(delta)
     if @speed + delta < 0 
         @speed = 0
@@ -29,12 +30,15 @@ class Train
       @speed += delta
     end
   end
+
   def station
     @route.stations[@station_index]
   end
+
   def station_before
     @route.stations[@station_index - 1]
   end 
+
   def station_next
     @route.stations[@station_index + 1]
   end  
@@ -48,6 +52,9 @@ class Train
 			else
 				@station_index += 1
 			end
+    end
+  end
+
   def move_back
     if @route == nil
       puts "Вы не можете начать движение, потому что у Вас нет маршрута"
@@ -59,6 +66,7 @@ class Train
 		  end
 	  end
 	end
+
 	def van_add
 		if speed != 0
 			puts "Операции с вагонами можно производить только во время остановки поезда!"
@@ -66,6 +74,7 @@ class Train
 			@vans += 1
     end
   end
+
   def van_remove
 		if speed != 0
       puts "Операции с вагонами можно производить только во время остановки поезда!"
@@ -77,6 +86,7 @@ class Train
 			end
 		end
 	end
+  
 	def vans
 		@vans
 	end

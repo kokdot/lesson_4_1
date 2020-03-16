@@ -7,22 +7,28 @@
 # находящихся на станции).
 class Station
 	attr_reader :name
+
 	def initialize(name)
 		@name = name
 		@trains = []
 	end
+
 	def to_s
 		@name
 	end
+
 	def get_train(train)
 	  @trains << train
 	end
+
 	def send_train(train)
 		@trains.delete(train)
 	end
+
 	def list_trains
 		@trains.each { |train| puts train.number }
 	end
+  
 	def type_trains
     cargo = @trains.count { |train| train.type == 'грузовой' }
     passenger = @trains.count { |train| train.type == 'пассажирский' }
