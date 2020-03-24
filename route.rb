@@ -14,7 +14,7 @@ class Route
     @intermediate_stations = []
   end
 
-  def station=(station)
+  def add_station=(station)
     if @intermediate_stations.include?(station)
       puts "Станция #{ station.name } уже была добавлена в этот маршрут ранее!"
     else
