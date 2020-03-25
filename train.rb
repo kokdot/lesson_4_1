@@ -14,7 +14,7 @@
 # Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
 class Train
   attr_accessor :vans, :route
-  attr_reader :number
+  attr_reader :number, :station
   def initialize(number)
     @number = number
     # @type = type
